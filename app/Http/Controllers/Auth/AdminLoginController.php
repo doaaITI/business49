@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 
-use App\Owner;
+use App\Activity;
 
 use DB;
 class AdminLoginController extends Controller
@@ -25,7 +25,7 @@ class AdminLoginController extends Controller
 
     public function login(Request $request)
     {
-
+ 
 
       // Validate the form data
       $this->validate($request, [

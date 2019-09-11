@@ -14,6 +14,10 @@
 
 Auth::routes();
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 
@@ -29,13 +33,13 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 
-        Route::get('/', 'OwnerController@index')->name('admin.dashboard');
+        Route::get('/', 'ActivityController@index')->name('admin.dashboard');
 
 
 
     });
 
-Route::get('dashboard', 'OwnerController@index');
+Route::get('dashboard', 'ActivityController@index');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth:admin']], function () {
     //admin routes

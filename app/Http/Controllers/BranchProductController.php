@@ -1,19 +1,12 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Owner;
-use Auth;
 
-class OwnerController extends Controller
+class BranchProductController extends Controller 
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-
-    }
   /**
    * Display a listing of the resource.
    *
@@ -21,7 +14,7 @@ class OwnerController extends Controller
    */
   public function index()
   {
-       return view('admin.dashboard');
+    
   }
 
   /**
@@ -31,7 +24,7 @@ class OwnerController extends Controller
    */
   public function create()
   {
-
+    
   }
 
   /**
@@ -41,7 +34,7 @@ class OwnerController extends Controller
    */
   public function store(Request $request)
   {
-
+    
   }
 
   /**
@@ -52,7 +45,7 @@ class OwnerController extends Controller
    */
   public function show($id)
   {
-
+    
   }
 
   /**
@@ -63,7 +56,7 @@ class OwnerController extends Controller
    */
   public function edit($id)
   {
-
+    
   }
 
   /**
@@ -74,7 +67,7 @@ class OwnerController extends Controller
    */
   public function update($id)
   {
-
+    
   }
 
   /**
@@ -85,9 +78,9 @@ class OwnerController extends Controller
    */
   public function destroy($id)
   {
-
+    
   }
-
+  
 }
 
 ?>

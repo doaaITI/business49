@@ -3,21 +3,21 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUnitImagesTable extends Migration {
+class CreateActivityImageTable extends Migration {
 
 	public function up()
 	{
-		Schema::create('unit_images', function(Blueprint $table) {
+		Schema::create('activity_image', function(Blueprint $table) {
 			$table->increments('id');
 
 			$table->text('image');
-            $table->integer('unit_id')->unsigned();
+            $table->integer('activity_id')->unsigned();
             $table->timestamps();
 		});
 	}
 
 	public function down()
 	{
-		Schema::drop('unit_images');
+		Schema::drop('activity_image');
 	}
 }

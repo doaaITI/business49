@@ -1,6 +1,6 @@
 @extends('admin.layout.base')
 
-@section('title', 'RealStateManager ')
+@section('title', 'Business49 ')
 
 @section('content')
 
