@@ -11,7 +11,7 @@ class CreateActivityImageTable extends Migration {
 			$table->increments('id');
 
 			$table->text('image');
-            $table->integer('activity_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
 		});
 	}

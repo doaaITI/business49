@@ -11,7 +11,7 @@ class CreateBranchesTable extends Migration {
 			$table->increments('id');
 
 			$table->string('name', 100);
-			$table->integer('activity_id')->unsigned();
+			$table->integer('user_id')->unsigned();
 			$table->string('longitude', 100);
 			$table->string('latitude', 100);
             $table->string('mobile');

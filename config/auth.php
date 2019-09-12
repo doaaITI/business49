@@ -46,7 +46,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
             'hash' => false,
         ],
@@ -76,7 +76,7 @@ return [
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Activity::class,
+            'model' => App\Admin::class,
         ],
 
         // 'users' => [

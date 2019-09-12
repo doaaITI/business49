@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ActivityImage extends Model 
+class ActivityImage extends Model
 {
 
     protected $table = 'activity_image';
@@ -16,4 +16,11 @@ class ActivityImage extends Model
         return $this->belongsTo('Activity', 'activity_id');
     }
 
+    public function scopeFind($id){
+     return   $this->findOrFail($id);
+    }
+
+    public function scopeDestroy($id){
+        $this->findOrfail($id)->delete();
+    }
 }

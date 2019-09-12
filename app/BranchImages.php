@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BranchImages extends Model 
+class BranchImages extends Model
 {
 
     protected $table = 'branch_images';
@@ -13,7 +13,8 @@ class BranchImages extends Model
 
     public function Branch()
     {
-        return $this->belongsTo('Branch', 'branch_id');
+        return $this->belongsTo('Activity', 'branch_id');
     }
+
 
 }

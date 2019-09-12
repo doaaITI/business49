@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Delegate extends Model 
+class Delegate extends Model
 {
 
     protected $table = 'delegates';
@@ -13,7 +13,7 @@ class Delegate extends Model
 
     public function Activity()
     {
-        return $this->belongsTo('Activity');
+        return $this->belongsTo('User');
     }
 
 }

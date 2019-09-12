@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         anlutro\LaravelSettings\ServiceProvider::class,
         Lavary\Menu\ServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
 
     ],
 
