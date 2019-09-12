@@ -35,9 +35,19 @@ class User extends Authenticatable
         return $this->hasMany('Branch');
     }
 
-    public function delegate_id()
+    public function delegate()
     {
         return $this->hasMany('Delegate');
+    }
+
+    public function employee()
+    {
+        return $this->hasMany('Employee');
+    }
+
+    public function product()
+    {
+        return $this->hasMany('Product');
     }
 
 

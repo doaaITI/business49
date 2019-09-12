@@ -9,7 +9,7 @@ class CreateDelegatesTable extends Migration {
 	{
 		Schema::create('delegates', function(Blueprint $table) {
 			$table->increments('id');
-
+            $table->integer('user_id')->unsigned();
 			$table->string('name')->nullable();
 			$table->string('email')->unique();
 			$table->string('phone')->unique();

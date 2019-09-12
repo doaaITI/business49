@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration {
 			$table->integer('original_price')->unsigned()->default('0');
 			$table->integer('tax')->unsigned()->nullable();
 			$table->enum('type', array('product', 'service'));
-            $table->integer('branch_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
 		});
 	}

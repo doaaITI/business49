@@ -4,14 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Branch;
+use App\Delegate;
+use App\Products;
+use App\Employee;
+use App\Job;
 use App\Helpers\ImgHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ActivityStoreRequest;
+use App\Http\Requests\BranchStoreRequest;
+use App\Http\Requests\DelegateStoreRequest;
+use App\Http\Requests\StoreProductRequest;
+
 use Validator;
 
 class APIController extends Controller
 {
+public $delegate;
+public $employee;
+public $product;
+    public function __construct(Delegate $delegate , Products $product,Branch $branch , Employee $employee ,Job $job)
+    {
 
+        $this->delegate    = $delegate;
+        $this->product     = $product;
+        $this->branch      = $branch;
+        $this->employee    = $employee;
+        $this->job    = $job;
+    }
     public function login(){
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
             $user = Auth::user();
@@ -26,12 +46,8 @@ class APIController extends Controller
 
     public function register(ActivityStoreRequest $request)
       {
-        $validator =  $request->validated();
-
-        //  if ( $validator) {
-
-        //  return $this->prepare_response(401,$validator->errors());
-        //   }
+try{
+         $request->validated();
 
          $input = $request->all();
          if ($request->hasFile('brand_image')) {
@@ -50,20 +66,116 @@ class APIController extends Controller
             DB::table('activity_image')->insert([
                 ['image' =>$file, 'user_id' => $id ,'created_at'=>Carbon::now()]
             ]);
-
         }
+    }
+    return  $this->prepare_response(200,'Activity created successfully');
+  }catch(Exception $e){
+    return  $this->prepare_response(401,$e);
+  }
+}
 
-        return  $this->prepare_response(200,'Activity created successfully');
+public function storeBranch(BranchStoreRequest $request){
+    try{
+        $user = Auth::user();
+        $request->validated();
 
+        $input=$request->all();
+        $input['user_id']=$user->id;
+        $branch=Branch::create($input);
+        $id=$branch->id;
+        if (isset($request->branch_image)) {
+
+                foreach ($request->branch_image as $key=>$file) {
+
+                $file = FileHelper::upload_file($file);
+                DB::table('branch_images')->insert([
+                    ['image' =>$file, 'branch_id' => $id ,'created_at'=>Carbon::now()]
+                ]);
+            }
+        }
+        return  $this->prepare_response(200,'Branch created successfully');
+    }catch(Exception $e) {
+        return  $this->prepare_response(401,$e);
+  }
+}
+
+ public function storeDelegate(DelegateStoreRequest $request){
+     try{
+    $user = Auth::user();
+    $request->validated();
+    $request->id=$user->id;
+    $this->delegate->scopeStore($request);
+
+   return  $this->prepare_response(200,'Delegate created successfully');
+     }catch(Exception $e){
+        return  $this->prepare_response(401,$e);
+     }
+ }
+
+  public function storeProduct(StoreProductRequest $request){
+    try{
+        $user = Auth::user();
+        $request->validated();
+        $request->id=$user->id;
+        $this->product->scopeStore($request);
+
+        return  $this->prepare_response(200,'Product created successfully');
+    }catch(Exception $e){
+        return  $this->prepare_response(401,$e);
+     }
+
+     }
+
+public function destroyBranch($id){
+try{
+     $this->branch->scopeDestroy($id);
+     return  $this->prepare_response(200,'Branch deleted successfully');
+    }catch(Exception $e){
+        return  $this->prepare_response(401,$e);
+     }
+}
+
+public function destroyDelegate($id){
+    try{
+         $this->delegate->scopeDestroy($id);
+         return  $this->prepare_response(200,'Delegate deleted successfully');
+        }catch(Exception $e){
+            return  $this->prepare_response(401,$e);
+         }
     }
 
-
-
-            public function details()
-            {
-                $user = Auth::user();
-                return $this->prepare_response(200,$user);
+public function destroyEmployee($id){
+    try{
+            $this->employee->scopeDestroy($id);
+            return  $this->prepare_response(200,'Employee deleted successfully');
+        }catch(Exception $e){
+            return  $this->prepare_response(401,$e);
             }
+    }
+
+public function destroyProduct($id){
+    try{
+            $this->product->scopeDestroy($id);
+            return  $this->prepare_response(200,'Employee deleted successfully');
+        }catch(Exception $e){
+            return  $this->prepare_response(401,$e);
+            }
+    }
+
+public function  jobIndex(){
+    try{
+      $jobs=$this->job->scopeIndex();
+     return $this->prepare_response(200,$jobs);
+    }catch(Exception $e){
+    return  $this->prepare_response(401,$e);
+    }
+}
+    public function details()
+    {
+        $user = Auth::user();
+        return $this->prepare_response(200,$user);
+    }
+
 
 
         private function prepare_response($status,$message){

@@ -9,7 +9,7 @@ class Branch extends Model
 
     protected $table = 'branches';
     public $timestamps = true;
-    protected $fillable = array('name', 'longitude', 'latitude', 'mobile');
+    protected $fillable = array('name', 'longitude', 'latitude', 'mobile','user_id');
 
     public function Activity()
     {
@@ -21,9 +21,9 @@ class Branch extends Model
         return $this->hasMany('BranchImages');
     }
 
-    public function employee()
-    {
-        return $this->hasMany('Employee');
+    public function scopeDestroy($id){
+       $this->findOrFail($id)->delete();
     }
+
 
 }

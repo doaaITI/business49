@@ -12,7 +12,15 @@ class CreateForeignKeys extends Migration {
 			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('cascade')
 						->onUpdate('cascade');
-		});
+        });
+
+        Schema::table('delegates', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users')
+						->onDelete('cascade')
+						->onUpdate('cascade');
+        });
+
+
 		Schema::table('activity_image', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('cascade')
@@ -25,7 +33,13 @@ class CreateForeignKeys extends Migration {
 		});
 
 		Schema::table('employee', function(Blueprint $table) {
-			$table->foreign('branch_id')->references('id')->on('branches')
+			$table->foreign('user_id')->references('id')->on('users')
+						->onDelete('cascade')
+						->onUpdate('cascade');
+        });
+
+        Schema::table('products', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users')
 						->onDelete('cascade')
 						->onUpdate('cascade');
 		});
@@ -35,7 +49,12 @@ class CreateForeignKeys extends Migration {
 	{
 		Schema::table('branches', function(Blueprint $table) {
 			$table->dropForeign('branches_user_id_foreign');
-		});
+        });
+
+        Schema::table('delegates', function(Blueprint $table) {
+			$table->dropForeign('delegates_user_id_foreign');
+        });
+
 		Schema::table('activity_image', function(Blueprint $table) {
 			$table->dropForeign('activity_image_user_id_foreign');
 		});
@@ -44,7 +63,11 @@ class CreateForeignKeys extends Migration {
 		});
 
 		Schema::table('employee', function(Blueprint $table) {
-			$table->dropForeign('employee_branch_id_foreign');
+			$table->dropForeign('employee_user_id_foreign');
+        });
+
+        Schema::table('products', function(Blueprint $table) {
+			$table->dropForeign('products_user_id_foreign');
 		});
 	}
 }

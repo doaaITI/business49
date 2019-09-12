@@ -24,5 +24,19 @@ Route::post('register', 'APIController@register');
 
 Route::group(['middleware' => 'auth:api'], function()
 {
+    Route::get('jobs', 'APIController@jobIndex');
+
    Route::post('details', 'APIController@details');
+
+   Route::post('store/branch', 'APIController@storeBranch');
+
+   Route::post('store/delegate', 'APIController@storeDelegate');
+
+   Route::post('store/product', 'APIController@storeProduct');
+
+   Route::delete('delete/branch/{id}', 'APIController@destroyBranch');
+
+   Route::delete('delete/delegate/{id}', 'APIController@destroyDelegate');
+   Route::delete('delete/employee/{id}', 'APIController@destroyEmployee');
+   Route::delete('delete/product/{id}', 'APIController@destroyProduct');
 });
