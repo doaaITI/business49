@@ -33,10 +33,17 @@ Route::group(['middleware' => 'auth:api'], function()
    Route::post('store/delegate', 'APIController@storeDelegate');
 
    Route::post('store/product', 'APIController@storeProduct');
+   Route::post('store/employee', 'APIController@storeEmployee');
 
    Route::delete('delete/branch/{id}', 'APIController@destroyBranch');
 
    Route::delete('delete/delegate/{id}', 'APIController@destroyDelegate');
    Route::delete('delete/employee/{id}', 'APIController@destroyEmployee');
    Route::delete('delete/product/{id}', 'APIController@destroyProduct');
+
+   Route::post('update/profile', 'APIController@updateProfile');
+   Route::post('change/password', 'APIController@changePassword');
+
+   Route::post('update/product/{id}', 'APIController@updateProduct');
+   Route::post('update/employee/{id}', 'APIController@updateEmployee');
 });

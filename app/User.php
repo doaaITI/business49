@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Helpers\ImgHelper;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\HasApiTokens;
 
 
@@ -104,6 +105,38 @@ class User extends Authenticatable
     return  $this->scopeFind($id)->ActivityImage ;
     }
 
+public function updateProfile($request){
+    $user = $this->find(Auth::user()->id);
+
+
+
+
+    if ($request->hasFile('brand_image')) {
+        $brand_image = ImgHelper::upload_image($request->brand_image);
+        $user->brand_image=$brand_image;
+    }
+
+
+
+    $user->name =$request->name;
+    $user->email=$request->email;
+    $user->base_location=$request->base_location;
+    $user->department=$request->department;
+    $user->description=$request->description;
+    $user->mobile=$request->mobile;
+    $user->save();
+
+   }
+
+ public function changePassword($request){
+
+    $user = $this->find(Auth::user()->id);
+           if(bcrypt($request->old_password) == $user->password){
+            $user->password =bcrypt($request->new_password);
+            $user->save();
+
+           }
+ }
 
 
 }

@@ -12,25 +12,30 @@ use App\Job;
 use App\Helpers\ImgHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ActivityStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Http\Requests\BranchStoreRequest;
 use App\Http\Requests\DelegateStoreRequest;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\EmployeeStoreRequest;
+use App\Http\Requests\EmployeeUpdateRequest;
 
 use Validator;
 
 class APIController extends Controller
 {
-public $delegate;
-public $employee;
-public $product;
-    public function __construct(Delegate $delegate , Products $product,Branch $branch , Employee $employee ,Job $job)
+public $delegate,$employee,$product ,$user;
+
+
+    public function __construct(Delegate $delegate , Products $product,Branch $branch , Employee $employee ,Job $job ,User $user)
     {
 
         $this->delegate    = $delegate;
         $this->product     = $product;
         $this->branch      = $branch;
         $this->employee    = $employee;
-        $this->job    = $job;
+        $this->job         = $job;
+        $this->user        =$user;
     }
     public function login(){
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
@@ -156,7 +161,7 @@ public function destroyEmployee($id){
 public function destroyProduct($id){
     try{
             $this->product->scopeDestroy($id);
-            return  $this->prepare_response(200,'Employee deleted successfully');
+            return  $this->prepare_response(200,'Product deleted successfully');
         }catch(Exception $e){
             return  $this->prepare_response(401,$e);
             }
@@ -169,7 +174,59 @@ public function  jobIndex(){
     }catch(Exception $e){
     return  $this->prepare_response(401,$e);
     }
+   }
+
+public function updateProfile(UserUpdateRequest $request){
+    try{
+        $request->validated();
+     $this->user->updateProfile($request);
+     return $this->prepare_response(200,'updated sucessfully');
+
+    }catch(Exception $e){
+        return  $this->prepare_response(401,$e);
+    }
 }
+
+public function changePassword(Request $request){
+    try{
+        $this->user->changePassword($request);
+        return $this->prepare_response(200,'password changed sucessfully');
+
+    }catch(Exception $e){
+        return  $this->prepare_response(401,$e);
+    }
+}
+
+public function updateProduct(ProductUpdateRequest $request , $id){
+    try{
+        $request->validated();
+        $this->product->scopeUpdate($request ,$id);
+        return $this->prepare_response(200,'product updated successfully');
+    }catch(Exception $e){
+        return  $this->prepare_response(401,$e);
+    }
+}
+
+public function storeEmployee(EmployeeStoreRequest $request){
+    try{
+        $request->validated();
+        $this->employee->scopeStore($request);
+        return $this->prepare_response(200,'employee stored successfully');
+    }catch(Exception $e){
+        return  $this->prepare_response(401,$e);
+    }
+}
+
+public function updateEmployee(EmployeeUpdateRequest $request , $id){
+    try{
+        $request->validated();
+        $this->employee->scopeUpdate($request ,$id);
+        return $this->prepare_response(200,'product updated successfully');
+    }catch(Exception $e){
+        return  $this->prepare_response(401,$e);
+    }
+}
+
     public function details()
     {
         $user = Auth::user();
